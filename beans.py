@@ -1,1 +1,1 @@
-print('beasns')
+print('beans')
