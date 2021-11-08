@@ -14,8 +14,12 @@ class Connection:
         self.board = rick.loads(self.board)
 
     def connect(self):
-        self.client.connect(self.address)
-        return self.client.recv(4096*8)
+        try:
+            self.client.connect(self.address)
+            return self.client.recv(4096*8)
+        except error as e:
+            print(e)
+
 
     def disconnect(self):
         try:
@@ -23,8 +27,7 @@ class Connection:
             return 'great success'
         except error as e:
             print(e)
-            return e
-
+            
     def send(self, data, pick=False):
         timer = time()
         while time() - timer < 5:
