@@ -3,10 +3,10 @@ from Chessticles.Pieces import GameObjects
 
 
 class Bishop(GameObjects.GameObjects):
-    def __init__(self, color, board, position):
-        super().__init__(color, board, position)
-        self.DEFAULTBlackBishopImage = ImageTk.PhotoImage(file="images/bishop1.png")
-        self.DEFAULTWhiteBishopImage = ImageTk.PhotoImage(file="images/bishop.png")
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.DEFAULTBlackBishopImage = ImageTk.PhotoImage(file="Pieces/images/bishop1.png")
+        self.DEFAULTWhiteBishopImage = ImageTk.PhotoImage(file="Pieces/images/bishop.png")
         self.initialize_image()
 
     def __str__(self):

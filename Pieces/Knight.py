@@ -5,8 +5,8 @@ from PIL import ImageTk
 class Knight(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
-        self.DEFAULTBlackKnightImage = ImageTk.PhotoImage(file="images/knight1.png")
-        self.DEFAULTWhiteKnightImage = ImageTk.PhotoImage(file="images/knight.png")
+        self.DEFAULTBlackKnightImage = ImageTk.PhotoImage(file="Pieces/images/knight1.png")
+        self.DEFAULTWhiteKnightImage = ImageTk.PhotoImage(file="Pieces/images/knight.png")
         self.initialize_image()
 
     def __str__(self):

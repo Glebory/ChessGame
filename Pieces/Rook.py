@@ -5,8 +5,8 @@ from PIL import ImageTk
 class Rook(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
-        self.DEFAULTBlackRookImage = ImageTk.PhotoImage(file="images/rook1.png")
-        self.DEFAULTWhiteRookImage = ImageTk.PhotoImage(file="images/rook.png")
+        self.DEFAULTBlackRookImage = ImageTk.PhotoImage(file="Pieces/images/rook1.png")
+        self.DEFAULTWhiteRookImage = ImageTk.PhotoImage(file="Pieces/images/rook.png")
         self.initialize_image()
 
     def __str__(self):
