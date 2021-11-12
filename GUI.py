@@ -92,11 +92,59 @@ class GameBoard(ttk.Frame):
             newX, newY = -(x-nearestX), -(y-nearestY)
             self.canvas.move(tk.CURRENT, newX, newY)
 
+            #update piece position
+            oldX = int(self.originalX//self.square_size)
+            oldY = int(self.originalY//self.square_size)
+            targetX = int(x//self.square_size)
+            targetY = int(y//self.square_size)
+
+            
             if self.checkIfLegalMove(int(self.originalX//self.square_size), int(self.originalY//self.square_size), int(x//self.square_size), int(y//self.square_size)) == False:
                 self.canvas.move(tk.CURRENT, -(self.canvas.coords(tk.CURRENT)[0]-self.originalX), -(self.canvas.coords(tk.CURRENT)[1]-self.originalY))
+                #self.piecesTwo[oldY][oldX].position = (oldX, oldY)
+            else:               
+                #update position parameter of piece
+                self.piecesTwo[oldY][oldX].position = (targetX, targetY)
+                print(self.piecesTwo[oldY][oldX].position)
+
+                #update piecesTwo matrix
+                self.piecesTwo[targetY][targetX] = self.piecesTwo[oldY][oldX]
+                self.piecesTwo[oldY][oldX] = 0
+                for i in self.piecesTwo:
+                    string = ""
+                    for j in i:
+                        if type(j).__name__ == "int":
+                            string += " ---- "
+                        else: 
+                            string += " " + type(j).__name__ + " "
+
+                    print(string + "\n")
 
     def checkIfLegalMove(self, startCoordX, startCoordY, endCoordX, endCoordY):
-        pass
+        currentPiece = self.piecesTwo[startCoordY][startCoordX]
+        targetSquare = self.piecesTwo[endCoordX][endCoordY]
+        #print(type(currentPiece).__name__ + "<---------------------------")
+        availableMoves = currentPiece.check_valid_moves()
+        print(availableMoves)
+        print(str(currentPiece.position) + "<----")
+        #print(currentPiece.whiteRookMoves)
+
+        for i in availableMoves:
+            print(i[0], i[1])
+
+            if i[0] == endCoordY and i[1] == endCoordX:
+                print("valid")
+
+
+
+        #check if moving onto another piece
+        #or if king in check
+        if type(targetSquare).__name__ != "int":
+            if currentPiece.color == targetSquare.color:
+                #print("yaya")
+                #return False
+                pass
+
 
     def showLegalMoves(self, x, y):
         pass
@@ -111,6 +159,8 @@ class GameBoard(ttk.Frame):
         self.board = squareMatrix
 
         self.pieces = squareMatrix
+
+        self.piecesTwo = squareMatrix
 
         self.row0 = [Rook("white", self,(0,0)),
         Knight("white", self,(0,1)),
@@ -130,14 +180,14 @@ class GameBoard(ttk.Frame):
         Pawn("white", self, (1, 6)),
         Pawn("white", self, (1, 7))]
 
-        self.row6 = [Pawn("black", self, (6, 0)),
-        Pawn("black", self, (6, 1)),
-        Pawn("black", self, (6, 2)),
-        Pawn("black", self, (6, 3)),
-        Pawn("black", self, (6, 4)),
-        Pawn("black", self, (6, 5)),
+        self.row6 = [Pawn("black", self, (0, 6)),
+        Pawn("black", self, (1, 6)),
+        Pawn("black", self, (2, 6)),
+        Pawn("black", self, (3, 6)),
+        Pawn("black", self, (4, 6)),
+        Pawn("black", self, (5, 6)),
         Pawn("black", self, (6, 6)),
-        Pawn("black", self, (6, 7))]
+        Pawn("black", self, (7, 6))]
 
         self.row7 = [Rook("black", self, (7, 0)),
         Knight("black", self, (7, 1)),
@@ -172,15 +222,19 @@ class GameBoard(ttk.Frame):
 
         for a in range(cols):
             self.pieces[0][a] = self.canvas.create_image(a*self.square_size, 0, image = self.row0[a].image, anchor='nw')
+            self.piecesTwo[0][a] = self.row0[a]
 
         for b in range(cols):
             self.pieces[1][b] = self.canvas.create_image(b*self.square_size, 64, image = self.row1[b].image, anchor='nw')
+            self.piecesTwo[1][b] = self.row1[b]
 
         for c in range(cols):
             self.pieces[6][c] = self.canvas.create_image(c*self.square_size, 384, image = self.row6[c].image, anchor='nw')
+            self.piecesTwo[6][c] = self.row6[c]
 
         for d in range(cols):
             self.pieces[7][d] = self.canvas.create_image(d*self.square_size, 448, image = self.row7[d].image, anchor='nw')
+            self.piecesTwo[7][d] = self.row7[d]
 
     def changeColour(self, colour):
         if colour == DARKGREEN_COLOUR:
