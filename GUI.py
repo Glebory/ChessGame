@@ -3,7 +3,7 @@ from tkinter import ttk
 from Pieces.Bishop import *
 from Pieces.King import *
 from Pieces.Knight import *
-from Pieces.pawn import *
+from Pieces.Pawn import *
 from Pieces.Queen import *
 from Pieces.Rook import *
 #import game

@@ -2,18 +2,18 @@
 import socket as sock
 import pickle as rick
 import time
-import game
+import game as g
+import GUI as gooey
 
 s = sock.socket(sock.AF_INET, sock.SOCK_STREAM)
 
 serv = 'localhost'
 port = 3456
-ip = sock.gethostbyname(addr)
 addr = (serv, port)
+ip = sock.gethostbyname(addr)
 conns = 0
 specs = 0
-spec_ids = []
-game = 
+game = gooey.GameBoard(GUI)
 
 try:
     sock.bind(addr)
@@ -65,7 +65,7 @@ def client(conn, game, isSpec):
                         name = data.split(' ')[1]
                         if playerid == 'b':
                             board.bname = name
-                        elif playerid = 'w':
+                        elif playerid == 'w':
                             board.name = name
 
                     if data == 'b wins':
@@ -87,14 +87,14 @@ def client(conn, game, isSpec):
 
                     send = rick.dumps(board)
 
-                conn = sendall(send)
+                conn.sendall(send)
 
             
             except Exception as e:
                 print(e)
                     
         
-    else: # spectator protocol
+    else: # TODO spectator protocol
         return
                     
 
