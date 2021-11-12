@@ -1,4 +1,4 @@
-from PIL import ImageTK
+from PIL import ImageTk
 from Chessticles.Pieces import GameObjects
 
 
@@ -6,8 +6,9 @@ class King(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
         self.KingMoves = []
-        self.DEFAULTBlackKingImage = ImageTK.PhotoImage(file="images/king1.png")
-        self.DEFAULTWhiteKingImage = ImageTK.PhotoImage(file="images/king.png")
+        self.DEFAULTBlackKingImage = ImageTk.PhotoImage(file="images/king1.png")
+        self.DEFAULTWhiteKingImage = ImageTk.PhotoImage(file="images/king.png")
+        self.initialize_image()
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
@@ -21,7 +22,7 @@ class King(GameObjects.GameObjects):
 
     def initialize_image(self):
         if self.color == "black":
-            image = self.DEFAULTBlackKingImage
+            self.image = self.DEFAULTBlackKingImage
         elif self.color == "white":
-            image = self.DEFAULTWhiteKingImage
-        return image
+            self.image = self.DEFAULTWhiteKingImage
+        return self.image

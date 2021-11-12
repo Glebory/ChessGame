@@ -1,5 +1,5 @@
 from Chessticles.Pieces import GameObjects
-from PIL import ImageTK
+from PIL import ImageTk
 
 
 class Pawn(GameObjects.GameObjects):
@@ -7,8 +7,9 @@ class Pawn(GameObjects.GameObjects):
         super().__init__(color, board, position)
         self.whitePawnMoves = []
         self.blackPawnMoves = []
-        self.DEFAULTBlackPawnImage = ImageTK.PhotoImage(file="images/pawn1.png")
-        self.DEFAULTWhitePawnImage = ImageTK.PhotoImage(file="images/pawn.png")
+        self.DEFAULTBlackPawnImage = ImageTk.PhotoImage(file="images/pawn1.png")
+        self.DEFAULTWhitePawnImage = ImageTk.PhotoImage(file="images/pawn.png")
+        self.initialize_image()
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
@@ -28,7 +29,7 @@ class Pawn(GameObjects.GameObjects):
 
     def initialize_image(self):
         if self.color == "black":
-            image = self.DEFAULTBlackPawnImage
+            self.image = self.DEFAULTBlackPawnImage
         elif self.color == "white":
-            image = self.DEFAULTWhitePawnImage
-        return image
+            self.image = self.DEFAULTWhitePawnImage
+        return self.image

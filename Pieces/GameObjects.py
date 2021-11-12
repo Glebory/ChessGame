@@ -1,5 +1,5 @@
 class GameObjects:
-    def __init__(self, color: str, board, position):
+    def __init__(self, color, board, position):
         self.color = color
         self.board = board
         self.position = position
@@ -23,3 +23,6 @@ class GameObjects:
     @position.setter
     def position(self, new_position):
         self.position = new_position
+
+    def initialize_image(self):
+        pass
