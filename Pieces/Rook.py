@@ -31,3 +31,4 @@ class Rook(GameObjects.GameObjects):
         elif self.color == "white":
             self.image = self.DEFAULTWhiteRookImage
         return self.image
+

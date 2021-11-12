@@ -24,3 +24,4 @@ class Pawn(GameObjects.GameObjects):
         elif self.color == "white":
             self.image = self.DEFAULTWhitePawnImage
         return self.image
+
