@@ -1,4 +1,4 @@
-from Chessticles.Pieces import GameObjects
+from Pieces import GameObjects
 from PIL import ImageTk
 
 
@@ -9,7 +9,7 @@ class Rook(GameObjects.GameObjects):
         self.blackRookMoves = []
         self.DEFAULTBlackRookImage = ImageTk.PhotoImage(file="Pieces/images/rook1.png")
         self.DEFAULTWhiteRookImage = ImageTk.PhotoImage(file="Pieces/images/rook.png")
-        self._image = self.initialize_image()
+        self.initialize_image()
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
