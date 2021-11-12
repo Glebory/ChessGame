@@ -1,7 +1,7 @@
 from PIL import ImageTK
-class Pawn:
+class Pawn(GameObjects):
     def __init__(self, color, board, position):
-        GameObjects.__init__(color, board, position)
+        super().__init__(color, board, position)
         self.whitePawnMoves = []
         self.blackPawnMoves = []
         self.DEFAULTblackPawnImage = ImageTk.PhotoImage(file="images/pawn1.png")
@@ -11,16 +11,18 @@ class Pawn:
         return "%s %s" % (self.color, self.position)
 
     def checkValidWhiteMoves(self):
-            if self.color == "white":
-                if self.board[i] == 6 and self.color = "white":
-                    self.whitePawnMoves.append([i-2][j])
+        for i in range(1,8):
+            for j in range(1,8):
+                if self.color == "white":
+                    if self.board[i] == 6 and self.color = "white":
+                        self.whitePawnMoves.append([i-2][j])
+                    else:
+                        self.whitePawnMoves.append([i-1][j])
                 else:
-                    self.whitePawnMoves.append([i-1][j])
-            else:
-                if self.board[i] == 1 and self.color = "black":
-                    self.blackPawnMoves.append([i+2][j])
-                else:
-                    self.blackPawnMoves.append([i+1][j])
+                    if self.board[i] == 1 and self.color = "black":
+                        self.blackPawnMoves.append([i+2][j])
+                    else:
+                        self.blackPawnMoves.append([i+1][j])
 
     def initialize_image():
         if self.color = "black":

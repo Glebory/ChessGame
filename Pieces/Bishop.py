@@ -1,7 +1,7 @@
 from PIL import ImageTK
-class Bishop:
+class Bishop(GameObjects):
     def __init__(self, color, board, position):
-        GameObjects.__init__(color, board, position)
+        super().__init__(color, board, position)
         self.bishopMoves = []
         self.DEFAULTblackBishopImage = ImageTk.PhotoImage(file="images/bishop1.png")
         self.DEFAULTwhiteBishopImage = ImageTk.PhotoImage(file="images/bishop.png")
@@ -11,10 +11,11 @@ class Bishop:
 
     def checkValidMoves(self):
         # check within bounds of board
-        if 0 <= i <= 7 and 0 <= j <= 7:
-            for x in range(1,8):
-                possibleMoves = [(i-x, j-x), (i+x, j+x)]
-                self.bishopMoves += possibleMoves
+        for i in range(1,8):
+            for j in range(1,8):
+                for x in range(1,8):
+                    possibleMoves = [(i-x, j-x), (i+x, j+x)]
+                    self.bishopMoves += possibleMoves
 
     def initialize_image():
         if self.color = "black":

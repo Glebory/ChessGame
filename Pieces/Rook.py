@@ -1,7 +1,7 @@
 from PIL import ImageTK
-class Rook:
+class Rook(GameObjects):
     def __init__(self, color, board, position):
-        GameObjects.__init__(color, board, position)
+        super().__init__(color, board, position)
         self.whiteRookMoves = []
         self.blackRookMoves = []
         self.DEFAULTblackRookImage = ImageTk.PhotoImage(file="images/rook1.png")
@@ -12,13 +12,15 @@ class Rook:
 
     def checkValidMoves(self):
             # check if within bounds of board
-            if 0 <= i <= 7 and 0 <= j <= 7:
-                if self.color == "white":
-                    whiteMoves = [(i - x, j), (i + x, j), (i, j - x), (i, j + x)]
-                    self.whiteRookMoves += whiteMoves
-                else:
-                    blackMoves = [(i + x, j), (i - x, j), (i, j + x), (i, j - x)]
-                    self.blackRookMoves += blackMoves
+            for i in range(1,8):
+                for j in range(1,8):
+                    if 0 <= i <= 7 and 0 <= j <= 7:
+                        if self.color == "white":
+                            whiteMoves = [(i - x, j), (i + x, j), (i, j - x), (i, j + x)]
+                            self.whiteRookMoves += whiteMoves
+                        else:
+                            blackMoves = [(i + x, j), (i - x, j), (i, j + x), (i, j - x)]
+                            self.blackRookMoves += blackMoves
 
     def initialize_image():
         if self.color = "black":

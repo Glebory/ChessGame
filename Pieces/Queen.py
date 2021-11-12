@@ -1,7 +1,7 @@
 from PIL import ImageTK
-class Queen:
+class Queen(GameObjects):
     def __init__(self, color, board, position):
-        GameObjects.__init__(color, board, position)
+        super().__init__(color, board, position)
         self.whiteQueenMoves = []
         self.blackQueenMoves = []
         self.DEFAULTblackQueenImage = ImageTk.PhotoImage(file="images/queen1.png")
@@ -11,13 +11,14 @@ class Queen:
         return "%s %s" % (self.color, self.position)
 
     def checkValidMoves(self):
-        if 0 <= i <= 7 and 0 <= j <= 7:
-            if self.color == "white":
-                whiteMoves = [(i - x, j), (i + x, j), (i, j - x), (i, j + x), (i-x, j-x), (i+x, j+x)]
-                self.whiteQueenMoves += whiteMoves
-            else:
-                blackMoves = [(i + x, j), (i - x, j), (i, j + x), (i, j - x), (i-x, j-x), (i+x, j+x)]
-                self.blackQueenMoves += blackMoves
+        for i in range(1,8):
+            for j in range(1,8):
+                if self.color == "white":
+                    whiteMoves = [(i - x, j), (i + x, j), (i, j - x), (i, j + x), (i-x, j-x), (i+x, j+x)]
+                    self.whiteQueenMoves += whiteMoves
+                else:
+                    blackMoves = [(i + x, j), (i - x, j), (i, j + x), (i, j - x), (i-x, j-x), (i+x, j+x)]
+                    self.blackQueenMoves += blackMoves
 
 
     def initialize_image():
