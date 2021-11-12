@@ -1,25 +1,27 @@
 from PIL import ImageTK
-class Bishop(GameObjects):
+from Chessticles.Pieces import GameObjects
+
+
+class Bishop(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
         self.bishopMoves = []
-        self.DEFAULTblackBishopImage = ImageTk.PhotoImage(file="images/bishop1.png")
-        self.DEFAULTwhiteBishopImage = ImageTk.PhotoImage(file="images/bishop.png")
+        self.DEFAULTBlackBishopImage = ImageTK.PhotoImage(file="images/bishop1.png")
+        self.DEFAULTWhiteBishopImage = ImageTK.PhotoImage(file="images/bishop.png")
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
 
-    def checkValidMoves(self):
+    def check_valid_moves(self):
         # check within bounds of board
-        for i in range(1,8):
-            for j in range(1,8):
-                for x in range(1,8):
-                    possibleMoves = [(i-x, j-x), (i+x, j+x)]
-                    self.bishopMoves += possibleMoves
+        for x in range(1, 8):
+            for i, j in range(1, 8):
+                possible_moves = [(i-x, j-x), (i+x, j+x)]
+                self.bishopMoves += possible_moves
 
-    def initialize_image():
-        if self.color = "black":
-            image = self.DEFAULTblackBishopImage
-        elif self.color = "white":
-            image = self.DEFAULTwhiteBishopImage
+    def initialize_image(self):
+        if self.color == "black":
+            image = self.DEFAULTBlackBishopImage
+        elif self.color == "white":
+            image = self.DEFAULTWhiteBishopImage
         return image

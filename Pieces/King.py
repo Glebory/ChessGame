@@ -1,25 +1,27 @@
 from PIL import ImageTK
-class King(GameObjects):
+from Chessticles.Pieces import GameObjects
+
+
+class King(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
         self.KingMoves = []
-        self.DEFAULTblackKingImage = ImageTk.PhotoImage(file="images/king1.png")
-        self.DEFAULTwhiteKingImage = ImageTk.PhotoImage(file="images/king.png")
+        self.DEFAULTBlackKingImage = ImageTK.PhotoImage(file="images/king1.png")
+        self.DEFAULTWhiteKingImage = ImageTK.PhotoImage(file="images/king.png")
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
 
-    def checkValidMoves(self):
-        for i in range(1,8):
-            for j in range(1,8):
+    def check_valid_moves(self):
+        for i, j in range(1, 8):
             # check if within bounds of board
-                if 0 <= i <= 7 and 0 <= j <= 7:
-                    possibleMoves = [(i+1, j-1), (i+1, j), (i+1, j+1), (i, j-1), (i, j+1), (i-1, j-1), (i-1, j), (i-1, j+1)]
-                self.KingMoves += possibleMoves
+            if 0 <= i <= 7 and 0 <= j <= 7:
+                possible_moves = [(i+1, j-1), (i+1, j), (i+1, j+1), (i, j-1), (i, j+1), (i-1, j-1), (i-1, j), (i-1, j+1)]
+                self.KingMoves += possible_moves
 
-    def initialize_image():
-        if self.color = "black":
-            image = self.DEFAULTblackKingImage
-        elif self.color = "white":
-            image = self.DEFAULTwhiteKingImage
+    def initialize_image(self):
+        if self.color == "black":
+            image = self.DEFAULTBlackKingImage
+        elif self.color == "white":
+            image = self.DEFAULTWhiteKingImage
         return image
