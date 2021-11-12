@@ -14,15 +14,15 @@ class Rook(GameObjects.GameObjects):
 
     def check_valid_moves(self):
         rook_moves = []
-        # check if within bounds of board
         for x in range(1, 8):
-            for i, j in range(1, 8):
-                if self.color == "white":
-                    white_moves = [(i - x, j), (i + x, j), (i, j - x), (i, j + x)]
-                    rook_moves += white_moves
-                else:
-                    black_moves = [(i + x, j), (i - x, j), (i, j + x), (i, j - x)]
-                    rook_moves += black_moves
+            if self.position[0] - x >= 0:
+                rook_moves += [(self.position[0] - x, self.position[1])]
+            if self.position[0] + x <= 7:
+                rook_moves += [(self.position[0] + x, self.position[1])]
+            if self.position[1] - x >= 0:
+                rook_moves += [(self.position[0], self.position[1] - x)]
+            if self.position[1] + x <= 7:
+                rook_moves += [(self.position[0], self.position[1] + x)]
         return rook_moves
 
     def initialize_image(self):
