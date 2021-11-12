@@ -1,8 +1,11 @@
+from PIL import ImageTK
 class Knight:
-    def __init__(self, color, board):
-        GameObjects.__init__(color, board)
+    def __init__(self, color, board, position):
+        GameObjects.__init__(color, board, position)
         self.whiteKnightMoves = []
         self.blackKnightMoves = []
+        self.DEFAULTblackKnightImage = ImageTk.PhotoImage(file="images/knight1.png")
+        self.DEFAULTwhiteKnightImage = ImageTk.PhotoImage(file="images/knight.png")
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
@@ -17,3 +20,10 @@ class Knight:
                 else:
                     blackMoves = [(i+2, j-1), (i+2, j+1), (i+1, j+2), (i+1, j-2)]
                     self.blackKnightMoves += blackMoves
+
+    def initialize_image():
+        if self.color = "black":
+            image = self.DEFAULTblackKnightImage
+        elif self.color = "white":
+            image = self.DEFAULTwhiteKnightImage
+        return image
