@@ -1,7 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import ImageTk
-#import objects
+from Pieces.Bishop import *
+from Pieces.King import *
+from Pieces.Knight import *
+from Pieces.pawn import *
+from Pieces.Queen import *
+from Pieces.Rook import *
 #import game
 
 square_size = 64
@@ -47,6 +51,7 @@ class GameBoard(ttk.Frame):
         #self.window = Tk()
         #self.window.title("Chess Game")
         tk.Frame.__init__(self, parent)
+        self.square_size = 64
         self.canvas = tk.Canvas(self, width=square_size * cols, height=square_size * rows)
         self.canvas.pack()
         self.play_again()
@@ -54,6 +59,7 @@ class GameBoard(ttk.Frame):
         tk.Widget.bind(self.canvas, "<1>", self.mouseDown)
         tk.Widget.bind(self.canvas, "<B1-Motion>", self.mouseMove)
         tk.Widget.bind(self.canvas, "<ButtonRelease-1>", self.mouseUp)
+
 
     def mouseDown(self, event):
         #remember where the mouse went down
@@ -63,7 +69,7 @@ class GameBoard(ttk.Frame):
         self.originalX = self.canvas.coords(tk.CURRENT)[0]
         self.originalY = self.canvas.coords(tk.CURRENT)[1]
         #showLegalMoves might be better in mouseMove idk
-        self.showLegalMoves((self.originalX//square_size), (self.originalY//square_size))
+        self.showLegalMoves((self.originalX//self.square_size), (self.originalY//self.square_size))
 
     def mouseMove(self, event):
         #displays the chess piece as you drag it around the screen
@@ -77,8 +83,8 @@ class GameBoard(ttk.Frame):
         #snaps the chess piece to a chess square
         #puts the piece in its orignal space if the move was illegal
         if self.canvas.type(tk.CURRENT) != "rectangle":
-            nearestX = ((event.x // square_size) * square_size)
-            nearestY = ((event.y // square_size) * square_size)
+            nearestX = ((event.x // self.square_size) * square_size)
+            nearestY = ((event.y // self.square_size) * square_size)
 
             x = self.canvas.coords(tk.CURRENT)[0]
             y = self.canvas.coords(tk.CURRENT)[1]
@@ -86,7 +92,7 @@ class GameBoard(ttk.Frame):
             newX, newY = -(x-nearestX), -(y-nearestY)
             self.canvas.move(tk.CURRENT, newX, newY)
 
-            if self.checkIfLegalMove(int(self.originalX//square_size), int(self.originalY//square_size), int(x//square_size), int(y//square_size)) == False:
+            if self.checkIfLegalMove(int(self.originalX//self.square_size), int(self.originalY//self.square_size), int(x//self.square_size), int(y//self.square_size)) == False:
                 self.canvas.move(tk.CURRENT, -(self.canvas.coords(tk.CURRENT)[0]-self.originalX), -(self.canvas.coords(tk.CURRENT)[1]-self.originalY))
 
     def checkIfLegalMove(self, startCoordX, startCoordY, endCoordX, endCoordY):
@@ -103,49 +109,38 @@ class GameBoard(ttk.Frame):
             squareMatrix[x] = [0] * cols
 
         self.board = squareMatrix
+
         self.pieces = squareMatrix
 
-        self.blackPawnImage = ImageTk.PhotoImage(file="images/pawn1.png")
-        self.blackBishopImage = ImageTk.PhotoImage(file="images/bishop1.png")
-        self.blackKingImage = ImageTk.PhotoImage(file="images/king1.png")
-        self.blackKnightImage = ImageTk.PhotoImage(file="images/knight1.png")
-        self.blackQueenImage = ImageTk.PhotoImage(file="images/queen1.png")
-        self.blackRookImage = ImageTk.PhotoImage(file="images/rook1.png")
+        row0 = [Rook("black", self, (7,0)),
+        Knight("black", self, (7,1)),
+        Bishop("black", self,(7,2)),
+        King("black", self,(7,3)),
+        Queen("black", self,(7,4)),
+        Bishop("black", self,(7,5)),
+        Knight("black", self,(7,6)),
+        Rook("black", self, (7, 7))]
 
-        self.whitePawnImage = ImageTk.PhotoImage(file="images/pawn.png")
-        self.whiteBishopImage = ImageTk.PhotoImage(file="images/bishop.png")
-        self.whiteKingImage = ImageTk.PhotoImage(file="images/king.png")
-        self.whiteKnightImage = ImageTk.PhotoImage(file="images/knight.png")
-        self.whiteQueenImage = ImageTk.PhotoImage(file="images/queen.png")
-        self.whiteRookImage = ImageTk.PhotoImage(file="images/rook.png")
+        row7 = [Rook("white", self,(0,0)),
+        Knight("white", self,(0,1)),
+        Bishop("white", self,(0,2)),
+        King("white", self,(0,3)),
+        Queen("white", self,(0,4)),
+        Bishop("white", self,(0,5)),
+        Knight("white", self, (0, 6)),
+        Rook("white", self,(0,7))]
 
-        row0=[self.blackRookImage,
-              self.blackKnightImage,
-              self.blackBishopImage,
-              self.blackKingImage,
-              self.blackQueenImage,
-              self.blackBishopImage,
-              self.blackKnightImage,
-              self.blackRookImage]
 
-        row7=[self.whiteRookImage,
-              self.whiteKnightImage,
-              self.whiteBishopImage,
-              self.whiteKingImage,
-              self.whiteQueenImage,
-              self.whiteBishopImage,
-              self.whiteKnightImage,
-              self.whiteRookImage]
 
         colour = DARKGREEN_COLOUR
 
         for row in range(rows):
             colour = self.changeColour(colour)
             for col in range(cols):
-                x1 = (col * square_size)
-                y1 = (row * square_size)
-                x2 = (x1 + square_size)
-                y2 = (y1 + square_size)
+                x1 = (col * self.square_size)
+                y1 = (row * self.square_size)
+                x2 = (x1 + self.square_size)
+                y2 = (y1 + self.square_size)
                 self.board[row][col] = self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill=colour, tags="square")
 
                 #temporary items for testing, will update for later versions
@@ -157,16 +152,19 @@ class GameBoard(ttk.Frame):
                 # create canvas returns an integer id number for that object
                 # tagOrId argument can be used to reference this
                 if row == 1:
-                    self.pieces[row][col] = self.canvas.create_image(x1, y1, image=self.blackPawnImage, anchor='nw')
+                    p = Pawn("white", self, (1, col))
+                    self.pieces[row][col] = self.canvas.create_image(x1, y1, image=p.image, anchor='nw')
                 elif row == 6:
-                    self.pieces[row][col] = self.canvas.create_image(x1, y1, image=self.whitePawnImage, anchor='nw')
+                    p = Pawn("black", self, (6, col))
+                    self.pieces[row][col] = self.canvas.create_image(x1, y1, image=p.image, anchor='nw')
                 colour = self.changeColour(colour)
 
         for a in range(cols):
-            self.pieces[0][a] = self.canvas.create_image(a*square_size, 0, image = row0[a], anchor='nw')
+            self.pieces[0][a] = self.canvas.create_image(a*self.square_size, 0, image = row0[a].image, anchor='nw')
 
         for b in range(cols):
-            self.pieces[7][b] = self.canvas.create_image(b*square_size, 448, image = row7[b], anchor='nw')
+            self.pieces[7][b] = self.canvas.create_image(b*self.square_size, 448, image = row7[b].image, anchor='nw')
+
 
     def changeColour(self, colour):
         if colour == DARKGREEN_COLOUR:

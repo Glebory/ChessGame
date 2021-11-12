@@ -6,8 +6,8 @@ class King(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
         self.KingMoves = []
-        self.DEFAULTBlackKingImage = ImageTk.PhotoImage(file="images/king1.png")
-        self.DEFAULTWhiteKingImage = ImageTk.PhotoImage(file="images/king.png")
+        self.DEFAULTBlackKingImage = ImageTk.PhotoImage(file="Pieces/images/king1.png")
+        self.DEFAULTWhiteKingImage = ImageTk.PhotoImage(file="Pieces/images/king.png")
         self.initialize_image()
 
     def __str__(self):
@@ -22,7 +22,7 @@ class King(GameObjects.GameObjects):
 
     def initialize_image(self):
         if self.color == "black":
-            self.image = self.DEFAULTBlackKingImage
+            self._image = self.DEFAULTBlackKingImage
         elif self.color == "white":
-            self.image = self.DEFAULTWhiteKingImage
-        return self.image
+            self._image = self.DEFAULTWhiteKingImage
+

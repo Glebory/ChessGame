@@ -7,8 +7,8 @@ class Queen(GameObjects.GameObjects):
         super().__init__(color, board, position)
         self.whiteQueenMoves = []
         self.blackQueenMoves = []
-        self.DEFAULTBlackQueenImage = ImageTk.PhotoImage(file="images/queen1.png")
-        self.DEFAULTWhiteQueenImage = ImageTk.PhotoImage(file="images/queen.png")
+        self.DEFAULTBlackQueenImage = ImageTk.PhotoImage(file="Pieces/images/queen1.png")
+        self.DEFAULTWhiteQueenImage = ImageTk.PhotoImage(file="Pieces/images/queen.png")
         self.initialize_image()
 
     def __str__(self):
@@ -26,7 +26,7 @@ class Queen(GameObjects.GameObjects):
 
     def initialize_image(self):
         if self.color == "black":
-            self.image = self.DEFAULTBlackQueenImage
+            self._image = self.DEFAULTBlackQueenImage
         elif self.color == "white":
-            self.image = self.DEFAULTWhiteQueenImage
-        return self.image
+            self._image = self.DEFAULTWhiteQueenImage
+

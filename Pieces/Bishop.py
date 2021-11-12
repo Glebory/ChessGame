@@ -6,8 +6,8 @@ class Bishop(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
         self.bishopMoves = []
-        self.DEFAULTBlackBishopImage = ImageTk.PhotoImage(file="images/bishop1.png")
-        self.DEFAULTWhiteBishopImage = ImageTk.PhotoImage(file="images/bishop.png")
+        self.DEFAULTBlackBishopImage = ImageTk.PhotoImage(file="Pieces/images/bishop1.png")
+        self.DEFAULTWhiteBishopImage = ImageTk.PhotoImage(file="Pieces/images/bishop.png")
         self.initialize_image()
 
     def __str__(self):
@@ -22,8 +22,8 @@ class Bishop(GameObjects.GameObjects):
 
     def initialize_image(self):
         if self.color == "black":
-            self.image = self.DEFAULTBlackBishopImage
+            self._image = self.DEFAULTBlackBishopImage
         elif self.color == "white":
-            self.image = self.DEFAULTWhiteBishopImage
-        return self.image
+            self._image = self.DEFAULTWhiteBishopImage
+
 

@@ -7,8 +7,8 @@ class Pawn(GameObjects.GameObjects):
         super().__init__(color, board, position)
         self.whitePawnMoves = []
         self.blackPawnMoves = []
-        self.DEFAULTBlackPawnImage = ImageTk.PhotoImage(file="images/pawn1.png")
-        self.DEFAULTWhitePawnImage = ImageTk.PhotoImage(file="images/pawn.png")
+        self.DEFAULTBlackPawnImage = ImageTk.PhotoImage(file="Pieces/images/pawn1.png")
+        self.DEFAULTWhitePawnImage = ImageTk.PhotoImage(file="Pieces/images/pawn.png")
         self.initialize_image()
 
     def __str__(self):
@@ -29,7 +29,7 @@ class Pawn(GameObjects.GameObjects):
 
     def initialize_image(self):
         if self.color == "black":
-            self.image = self.DEFAULTBlackPawnImage
+            self._image = self.DEFAULTBlackPawnImage
         elif self.color == "white":
-            self.image = self.DEFAULTWhitePawnImage
-        return self.image
+            self._image = self.DEFAULTWhitePawnImage
+

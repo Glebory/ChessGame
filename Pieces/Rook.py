@@ -7,9 +7,9 @@ class Rook(GameObjects.GameObjects):
         super().__init__(color, board, position)
         self.whiteRookMoves = []
         self.blackRookMoves = []
-        self.DEFAULTBlackRookImage = ImageTk.PhotoImage(file="images/rook1.png")
-        self.DEFAULTWhiteRookImage = ImageTk.PhotoImage(file="images/rook.png")
-        self.initialize_image()
+        self.DEFAULTBlackRookImage = ImageTk.PhotoImage(file="Pieces/images/rook1.png")
+        self.DEFAULTWhiteRookImage = ImageTk.PhotoImage(file="Pieces/images/rook.png")
+        self._image = self.initialize_image()
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
@@ -28,7 +28,7 @@ class Rook(GameObjects.GameObjects):
 
     def initialize_image(self):
         if self.color == "black":
-            self.image = self.DEFAULTBlackRookImage
+            self._image = self.DEFAULTBlackRookImage
         elif self.color == "white":
-            self.image = self.DEFAULTWhiteRookImage
-        return self.image
+            self._image = self.DEFAULTWhiteRookImage
+
