@@ -40,3 +40,4 @@ class Queen(GameObjects.GameObjects):
         elif self.color == "white":
             self.image = self.DEFAULTWhiteQueenImage
         return self.image
+
