@@ -5,8 +5,8 @@ from PIL import ImageTk
 class Queen(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
-        self.DEFAULTBlackQueenImage = ImageTk.PhotoImage(file="images/queen1.png")
-        self.DEFAULTWhiteQueenImage = ImageTk.PhotoImage(file="images/queen.png")
+        self.DEFAULTBlackQueenImage = ImageTk.PhotoImage(file="Pieces/images/queen1.png")
+        self.DEFAULTWhiteQueenImage = ImageTk.PhotoImage(file="Pieces/images/queen.png")
         self.initialize_image()
 
     def __str__(self):
@@ -15,13 +15,23 @@ class Queen(GameObjects.GameObjects):
     def check_valid_moves(self):
         queen_moves = []
         for x in range(1, 8):
-            for i, j in range(1, 8):
-                if self.color == "white":
-                    white_moves = [(i - x, j), (i + x, j), (i, j - x), (i, j + x), (i-x, j-x), (i+x, j+x)]
-                    queen_moves += white_moves
-                else:
-                    black_moves = [(i + x, j), (i - x, j), (i, j + x), (i, j - x), (i-x, j-x), (i+x, j+x)]
-                    queen_moves += black_moves
+            if self.position[0] + x <= 7 and self.position[1] + x <= 7:
+                queen_moves += [(self.position[0] + x, self.position[1] + x)]
+            if self.position[0] - x >= 0 and self.position[1] - x >= 0:
+                queen_moves += [(self.position[0] - x, self.position[1] - x)]
+            if self.position[0] - x >= 0 and self.position[1] + x <= 7:
+                queen_moves += [(self.position[0] - x, self.position[1] + x)]
+            if self.position[0] + x <= 7 and self.position[1] - x >= 0:
+                queen_moves += [(self.position[0] + x, self.position[1] - x)]
+            if self.position[0] - x >= 0:
+                queen_moves += [(self.position[0] - x, self.position[1])]
+            if self.position[0] + x <= 7:
+                queen_moves += [(self.position[0] + x, self.position[1])]
+            if self.position[1] - x >= 0:
+                queen_moves += [(self.position[0], self.position[1] - x)]
+            if self.position[1] + x <= 7:
+                queen_moves += [(self.position[0], self.position[1] + x)]
+
         return queen_moves
 
     def initialize_image(self):
