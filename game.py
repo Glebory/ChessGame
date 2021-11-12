@@ -1,5 +1,5 @@
 from tkinter import *
-from objects import *
+
 
 class Game:
     def __init__(self):

@@ -5,8 +5,8 @@ from Chessticles.Pieces import GameObjects
 class King(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
-        self.DEFAULTBlackKingImage = ImageTk.PhotoImage(file="images/king1.png")
-        self.DEFAULTWhiteKingImage = ImageTk.PhotoImage(file="images/king.png")
+        self.DEFAULTBlackKingImage = ImageTk.PhotoImage(file="Pieces/images/king1.png")
+        self.DEFAULTWhiteKingImage = ImageTk.PhotoImage(file="Pieces/images/king.png")
         self.initialize_image()
 
     def __str__(self):

@@ -5,8 +5,8 @@ from PIL import ImageTk
 class Pawn(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
-        self.DEFAULTBlackPawnImage = ImageTk.PhotoImage(file="images/pawn1.png")
-        self.DEFAULTWhitePawnImage = ImageTk.PhotoImage(file="images/pawn.png")
+        self.DEFAULTBlackPawnImage = ImageTk.PhotoImage(file="Pieces/images/pawn1.png")
+        self.DEFAULTWhitePawnImage = ImageTk.PhotoImage(file="Pieces/images/pawn.png")
         self.initialize_image()
 
     def __str__(self):
