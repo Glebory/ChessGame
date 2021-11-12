@@ -22,7 +22,7 @@ class GUI(tk.Tk):
 class mainMenu(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)
-
+        self.container = container
         playGameButton = tk.Button(self, text="Play Game", command=self.playgamebuttonpressed)
         watchGameButton = tk.Button(self, text="Watch Game", command="watchgamebuttonpressed")
         settingsButton = tk.Button(self, text="Settings", command="settingsbuttonpressed")
@@ -42,7 +42,7 @@ class mainMenu(ttk.Frame):
 
     def playgamebuttonpressed(self):
         self.destroy()
-        board = GameBoard(app)
+        board = GameBoard(self.container)
         board.pack(side="top", fill="both", expand="true", padx=4, pady=4)
         board.mainloop()
 
@@ -246,8 +246,3 @@ class GameBoard(ttk.Frame):
     def play_again(self):
         self.canvas.delete("all")
         self.initialize_board()
-
-if __name__ == "__main__":
-    app = GUI()
-    frame = mainMenu(app)
-    app.mainloop()
