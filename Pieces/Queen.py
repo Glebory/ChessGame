@@ -5,28 +5,28 @@ from PIL import ImageTk
 class Queen(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
-        self.whiteQueenMoves = []
-        self.blackQueenMoves = []
-        self.DEFAULTBlackQueenImage = ImageTk.PhotoImage(file="Pieces/images/queen1.png")
-        self.DEFAULTWhiteQueenImage = ImageTk.PhotoImage(file="Pieces/images/queen.png")
+        self.DEFAULTBlackQueenImage = ImageTk.PhotoImage(file="images/queen1.png")
+        self.DEFAULTWhiteQueenImage = ImageTk.PhotoImage(file="images/queen.png")
         self.initialize_image()
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
 
     def check_valid_moves(self):
-        for x in range(1,8):
+        queen_moves = []
+        for x in range(1, 8):
             for i, j in range(1, 8):
                 if self.color == "white":
                     white_moves = [(i - x, j), (i + x, j), (i, j - x), (i, j + x), (i-x, j-x), (i+x, j+x)]
-                    self.whiteQueenMoves += white_moves
+                    queen_moves += white_moves
                 else:
                     black_moves = [(i + x, j), (i - x, j), (i, j + x), (i, j - x), (i-x, j-x), (i+x, j+x)]
-                    self.blackQueenMoves += black_moves
+                    queen_moves += black_moves
+        return queen_moves
 
     def initialize_image(self):
         if self.color == "black":
-            self._image = self.DEFAULTBlackQueenImage
+            self.image = self.DEFAULTBlackQueenImage
         elif self.color == "white":
-            self._image = self.DEFAULTWhiteQueenImage
-
+            self.image = self.DEFAULTWhiteQueenImage
+        return self.image
