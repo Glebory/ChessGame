@@ -112,16 +112,7 @@ class GameBoard(ttk.Frame):
 
         self.pieces = squareMatrix
 
-        row0 = [Rook("black", self, (7,0)),
-        Knight("black", self, (7,1)),
-        Bishop("black", self,(7,2)),
-        King("black", self,(7,3)),
-        Queen("black", self,(7,4)),
-        Bishop("black", self,(7,5)),
-        Knight("black", self,(7,6)),
-        Rook("black", self, (7, 7))]
-
-        row7 = [Rook("white", self,(0,0)),
+        self.row0 = [Rook("white", self,(0,0)),
         Knight("white", self,(0,1)),
         Bishop("white", self,(0,2)),
         King("white", self,(0,3)),
@@ -130,6 +121,32 @@ class GameBoard(ttk.Frame):
         Knight("white", self, (0, 6)),
         Rook("white", self,(0,7))]
 
+        self.row1 = [Pawn("white", self, (1, 0)),
+        Pawn("white", self, (1, 1)),
+        Pawn("white", self, (1, 2)),
+        Pawn("white", self, (1, 3)),
+        Pawn("white", self, (1, 4)),
+        Pawn("white", self, (1, 5)),
+        Pawn("white", self, (1, 6)),
+        Pawn("white", self, (1, 7))]
+
+        self.row6 = [Pawn("black", self, (6, 0)),
+        Pawn("black", self, (6, 1)),
+        Pawn("black", self, (6, 2)),
+        Pawn("black", self, (6, 3)),
+        Pawn("black", self, (6, 4)),
+        Pawn("black", self, (6, 5)),
+        Pawn("black", self, (6, 6)),
+        Pawn("black", self, (6, 7))]
+
+        self.row7 = [Rook("black", self, (7, 0)),
+        Knight("black", self, (7, 1)),
+        Bishop("black", self, (7, 2)),
+        King("black", self, (7, 3)),
+        Queen("black", self, (7, 4)),
+        Bishop("black", self, (7, 5)),
+        Knight("black", self, (7, 6)),
+        Rook("black", self, (7, 7))]
 
 
         colour = DARKGREEN_COLOUR
@@ -151,20 +168,19 @@ class GameBoard(ttk.Frame):
 
                 # create canvas returns an integer id number for that object
                 # tagOrId argument can be used to reference this
-                if row == 1:
-                    p = Pawn("white", self, (1, col))
-                    self.pieces[row][col] = self.canvas.create_image(x1, y1, image=p.image, anchor='nw')
-                elif row == 6:
-                    p = Pawn("black", self, (6, col))
-                    self.pieces[row][col] = self.canvas.create_image(x1, y1, image=p.image, anchor='nw')
                 colour = self.changeColour(colour)
 
         for a in range(cols):
-            self.pieces[0][a] = self.canvas.create_image(a*self.square_size, 0, image = row0[a].image, anchor='nw')
+            self.pieces[0][a] = self.canvas.create_image(a*self.square_size, 0, image = self.row0[a].image, anchor='nw')
 
         for b in range(cols):
-            self.pieces[7][b] = self.canvas.create_image(b*self.square_size, 448, image = row7[b].image, anchor='nw')
+            self.pieces[1][b] = self.canvas.create_image(b*self.square_size, 64, image = self.row1[b].image, anchor='nw')
 
+        for c in range(cols):
+            self.pieces[6][c] = self.canvas.create_image(c*self.square_size, 384, image = self.row6[c].image, anchor='nw')
+
+        for d in range(cols):
+            self.pieces[7][d] = self.canvas.create_image(d*self.square_size, 448, image = self.row7[d].image, anchor='nw')
 
     def changeColour(self, colour):
         if colour == DARKGREEN_COLOUR:
