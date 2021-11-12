@@ -14,15 +14,14 @@ class Knight(GameObjects.GameObjects):
 
     def check_valid_moves(self):
         knight_moves = []
-        for i, j in range(1, 8):
-            # check if within bounds of board
-            if 0 <= i <= 7 and 0 <= j <= 7:
-                if self.color == "white":
-                    white_moves = [(i-2, j-1), (i-2, j+1), (i-1, j+2), (j-2, i-1)]
-                    knight_moves += white_moves
-                else:
-                    black_moves = [(i+2, j-1), (i+2, j+1), (i+1, j+2), (i+1, j-2)]
-                    knight_moves += black_moves
+        two = [2, -2]
+        one = [1, -1]
+        for i in two:
+            for j in one:
+                if self.position[0] + i in range(8) and self.position[1] + j in range(8):
+                    knight_moves += [(self.position[0] + i, self.position[1] + j)]
+                if self.position[1] + i in range(8) and self.position[0] + j in range(8):
+                    knight_moves += [(self.position[0] + j, self.position[1] + i)]
         return knight_moves
 
     def initialize_image(self):
