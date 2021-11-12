@@ -14,11 +14,10 @@ class King(GameObjects.GameObjects):
 
     def check_valid_moves(self):
         king_moves = []
-        for i, j in range(1, 8):
-            # check if within bounds of board
-            if 0 <= i <= 7 and 0 <= j <= 7:
-                possible_moves = [(i+1, j-1), (i+1, j), (i+1, j+1), (i, j-1), (i, j+1), (i-1, j-1), (i-1, j), (i-1, j+1)]
-                king_moves += possible_moves
+        for x in range(-1, 2):
+            for y in range(-1, 2):
+                if 0 <= self.position[0] + x <= 7 and self.position[1] + y >= 0 and self.position[1] + x <= 7:
+                    king_moves += [(self.position[0] + x, self.position[1] + y)]
         return king_moves
 
     def initialize_image(self):
