@@ -6,12 +6,13 @@ from Pieces.Knight import *
 from Pieces.Pawn import *
 from Pieces.Queen import *
 from Pieces.Rook import *
-#import game
+import game
 
-square_size = 64
 rows = 8
 cols = 8
+global WHITE_COLOUR
 WHITE_COLOUR = "#ffffff"
+global DARKGREEN_COLOUR
 DARKGREEN_COLOUR = "#006600"
 
 class GUI(tk.Tk):
@@ -21,30 +22,73 @@ class GUI(tk.Tk):
 
 class mainMenu(ttk.Frame):
     def __init__(self, container):
+        self.container=container
         super().__init__(container)
 
-        playGameButton = tk.Button(self, text="Play Game", command=self.playgamebuttonpressed)
-        watchGameButton = tk.Button(self, text="Watch Game", command="watchgamebuttonpressed")
-        settingsButton = tk.Button(self, text="Settings", command="settingsbuttonpressed")
-        exitButton = tk.Button(self, text="Exit", command=tk._exit)
+
+        self.enterIpPlay = tk.Text(self, height=1)
+        self.playGameButton = tk.Button(self, text="Play Game", command=self.playgamebuttonpressed)
+        self.enterIpWatch = tk.Text(self, height=1)
+        self.watchGameButton = tk.Button(self, text="Watch Game", command=self.watchgamebuttonpressed)
+        self.settingsButton = tk.Button(self, text="Settings", command=self.settingsbuttonpressed)
+        self.exitButton = tk.Button(self, text="Exit", command=tk._exit)
 
         self.place(relx=.5, rely=.5, anchor="center")
-        playGameButton.grid(row=0, ipadx=64, sticky ="N, E, S, W")
-        watchGameButton.grid(row=1, ipadx=64, sticky ="N, E, S, W")
-        settingsButton.grid(row=2, ipadx=64, sticky ="N, E, S, W")
-        exitButton.grid(row=3, ipadx=64, sticky ="N, E, S, W")
+        self.enterIpPlay.grid(row=0, ipadx=64, sticky ="N, E, S, W")
+        self.playGameButton.grid(row=1, ipadx=64, sticky ="N, E, S, W")
+        self.enterIpWatch.grid(row=2, ipadx=64, sticky = "N, E, S, W")
+        self.watchGameButton.grid(row=3, ipadx=64, sticky ="N, E, S, W")
+        self.settingsButton.grid(row=4, ipadx=64, sticky ="N, E, S, W")
+        self.exitButton.grid(row=5, ipadx=64, sticky ="N, E, S, W")
 
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=1)
         self.rowconfigure(3, weight=1)
+        self.rowconfigure(4, weight=1)
+        self.rowconfigure(5, weight=1)
 
     def playgamebuttonpressed(self):
+        #just to get the ip address, idk what to do with it
+        ipaddress = self.enterIpPlay.get("1.0",'end-1c')
         self.destroy()
-        board = GameBoard(app)
+        board = GameBoard(self.container)
         board.pack(side="top", fill="both", expand="true", padx=4, pady=4)
         board.mainloop()
+
+    def watchgamebuttonpressed(self):
+        #just to get the ip address, idk what to do with it:
+        ipaddress = self.enterIpWatch.get("1.0", 'end-1c')
+        self.destroy()
+        board = GameBoard(self.container)
+        board.pack(side="top", fill="both", expand="true", padx=4, pady=4)
+        board.mainloop()
+
+    def settingsbuttonpressed(self):
+
+        self.settingsWindow = tk.Toplevel(self.container)
+        self.settingsLabel = tk.Label(self.settingsWindow , text="Settings")
+        self.settingsTextBox = tk.Text(self.settingsWindow, height=1)
+        self.settingsButton = tk.Button(self.settingsWindow , text="Change Board Square Colour", command = self.swapColour)
+
+        self.settingsLabel.grid(row=0, ipadx=64, sticky ="N, E, S, W")
+        self.settingsTextBox.grid(row=2, ipadx=64, sticky ="N, E, S, W")
+        self.settingsButton.grid(row=3, ipadx=64, sticky ="N, E, S, W")
+
+    def swapColour(self):
+        newColour = self.settingsTextBox.get("1.0", "end-1c")
+        newColour = newColour.split()
+        global DARKGREEN_COLOUR
+        DARKGREEN_COLOUR = newColour[0]
+        global WHITE_COLOUR
+        WHITE_COLOUR = newColour[1]
+        self.settingsWindow.destroy()
+
+
+class Settings(ttk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, parent)
 
 class GameBoard(ttk.Frame):
     def __init__(self, parent):
@@ -52,14 +96,14 @@ class GameBoard(ttk.Frame):
         #self.window.title("Chess Game")
         tk.Frame.__init__(self, parent)
         self.square_size = 64
-        self.canvas = tk.Canvas(self, width=square_size * cols, height=square_size * rows)
+
+        self.canvas = tk.Canvas(self, width=self.square_size * cols, height=self.square_size * rows)
         self.canvas.pack()
         self.play_again()
 
         tk.Widget.bind(self.canvas, "<1>", self.mouseDown)
         tk.Widget.bind(self.canvas, "<B1-Motion>", self.mouseMove)
         tk.Widget.bind(self.canvas, "<ButtonRelease-1>", self.mouseUp)
-    
 
     def mouseDown(self, event):
         #remember where the mouse went down
@@ -68,6 +112,8 @@ class GameBoard(ttk.Frame):
         self.lasty = event.y
         self.originalX = self.canvas.coords(tk.CURRENT)[0]
         self.originalY = self.canvas.coords(tk.CURRENT)[1]
+        #self.canvas_item_id = event.widget.find_withtag('current')[0]
+        #print(self.canvas_item_id)
         #showLegalMoves might be better in mouseMove idk
         self.showLegalMoves((self.originalX//self.square_size), (self.originalY//self.square_size))
         
@@ -84,13 +130,14 @@ class GameBoard(ttk.Frame):
         #snaps the chess piece to a chess square
         #puts the piece in its orignal space if the move was illegal
         if self.canvas.type(tk.CURRENT) != "rectangle":
-            nearestX = ((event.x // self.square_size) * square_size)
-            nearestY = ((event.y // self.square_size) * square_size)
+            nearestX = ((event.x // self.square_size) * self.square_size)
+            nearestY = ((event.y // self.square_size) * self.square_size)
 
             x = self.canvas.coords(tk.CURRENT)[0]
             y = self.canvas.coords(tk.CURRENT)[1]
 
             newX, newY = -(x-nearestX), -(y-nearestY)
+            #self.movePiece(tk.CURRENT, x, y, nearestX, nearestY)
             self.canvas.move(tk.CURRENT, newX, newY)
 
             #update piece position
@@ -177,6 +224,20 @@ class GameBoard(ttk.Frame):
     def showLegalMoves(self, x, y):
         pass
 
+    def movePiece(self, pieceId, endCoordY, endCoordX):
+        pass
+        #moves a piece to the selected coords
+        #so we can move the opponents pieces
+
+        #this moves the white rook in the top left to the middle of the board
+        #self.movePiece(self.pieces[0][0], 3, 3)
+        startX = int(self.canvas.coords(pieceId)[0])
+        startY = int(self.canvas.coords(pieceId)[1])
+        endCoordX *= self.square_size
+        endCoordY *= self.square_size
+        self.canvas.tag_raise(pieceId)
+        self.canvas.move(pieceId, (endCoordX-startX), (endCoordY-startY))
+
     def initialize_board(self):
         #creates a chess board and places the pieces
         #and stores the squares in a board matrix
@@ -241,7 +302,7 @@ class GameBoard(ttk.Frame):
                 y2 = (y1 + self.square_size)
                 self.board[row][col] = self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill=colour, tags="square")
 
-                #temporary items for testing, will update for later versions
+                #temporary images for testing, will update for later versions
                 #www.opengameart.org/content/pixel-chess-pieces
                 #Author - Lucas312
                 #CC BY 3.0
@@ -251,6 +312,10 @@ class GameBoard(ttk.Frame):
                 # tagOrId argument can be used to reference this
                 colour = self.changeColour(colour)
 
+        #object ids of chess pieces is 65 to 96
+        #the first 64 ids are the squares of the chess board
+        #i see no way around this, less i make the chess pieces before the board squares
+        #but i dont think its a big deal
         for a in range(cols):
             self.pieces[0][a] = self.canvas.create_image(a*self.square_size, 0, image = self.row0[a].image, anchor='nw')
             self.piecesTwo[0][a] = self.row0[a]
