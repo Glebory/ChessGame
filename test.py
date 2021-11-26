@@ -1,6 +1,5 @@
+from Chessticles.GUI import GUI, mainMenu, GameBoard, WHITE_COLOUR, DARKGREEN_COLOUR
 from Chessticles.Pieces.King import *
-from tkinter import Tk
-from GUI import *
 
 import unittest
 import io
@@ -32,15 +31,9 @@ class chessTest(unittest.TestCase):
         pass
 
     def test_setColour(self):
-
         app = GUI()
         frame = mainMenu(app)
         board = GameBoard(app)
-        board.setColour(5,5)
+        board.setColour(5, 5)
         self.assertEqual(board.canvas.itemcget(board.board[5][5], "fill"), WHITE_COLOUR)
         self.assertNotEqual(board.canvas.itemcget(board.board[5][5], "fill"), DARKGREEN_COLOUR)
-        
-
-
-
-
