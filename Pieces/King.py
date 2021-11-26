@@ -5,9 +5,9 @@ from Chessticles.Pieces import GameObjects
 class King(GameObjects.GameObjects):
     def __init__(self, color, board, position):
         super().__init__(color, board, position)
-      #  self.DEFAULTBlackKingImage = ImageTk.PhotoImage(file="Pieces/images/king1.png")
-       # self.DEFAULTWhiteKingImage = ImageTk.PhotoImage(file="Pieces/images/king.png")
-        #self.initialize_image()
+        self.DEFAULTBlackKingImage = ImageTk.PhotoImage(file="Pieces/images/king1.png")
+        self.DEFAULTWhiteKingImage = ImageTk.PhotoImage(file="Pieces/images/king.png")
+        self.initialize_image()
 
     def __str__(self):
         return "%s %s" % (self.color, self.position)
@@ -20,9 +20,10 @@ class King(GameObjects.GameObjects):
                     king_moves += [(self.position[0] + x, self.position[1] + y)]
         return king_moves
 
- #   def initialize_image(self):
-  #      if self.color == "black":
-   #         self.image = self.DEFAULTBlackKingImage
-    #    elif self.color == "white":
-     #       self.image = self.DEFAULTWhiteKingImage
-      #  return self.image
+    def initialize_image(self):
+        if self.color == "black":
+            self.image = self.DEFAULTBlackKingImage
+        elif self.color == "white":
+            self.image = self.DEFAULTWhiteKingImage
+        return self.image
+
