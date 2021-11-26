@@ -1,4 +1,6 @@
 from Chessticles.Pieces.King import *
+from tkinter import Tk
+from GUI import *
 
 import unittest
 import io
@@ -28,5 +30,17 @@ class chessTest(unittest.TestCase):
         assert (1, 5) in King.check_valid_moves(king)
         assert (8, 4) not in King.check_valid_moves(king)
         pass
+
+    def test_setColour(self):
+
+        app = GUI()
+        frame = mainMenu(app)
+        board = GameBoard(app)
+        board.setColour(5,5)
+        self.assertEqual(board.canvas.itemcget(board.board[5][5], "fill"), WHITE_COLOUR)
+        self.assertNotEqual(board.canvas.itemcget(board.board[5][5], "fill"), DARKGREEN_COLOUR)
+        
+
+
 
 
