@@ -18,7 +18,7 @@ class GameObjects:
 
     @property
     def position(self):
-        return self.position
+        return self._position
 
     @position.setter
     def position(self, new_position):
