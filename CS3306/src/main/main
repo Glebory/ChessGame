@@ -1,0 +1,17 @@
+public class Main{
+    error
+    public static void main( final String[] args ) {
+        final queueExample = new Queue();
+        final int item1 = 1;
+        final int item2 = 2;
+        final int item3 = 3;
+        queueExample.add(item1);
+        queueExample.add(item2);
+        queueExample.add(item3);
+        queueExample.size();
+        queueExample.element();
+        queueExample.peek();
+        queueExample.poll();
+        queueExample.remove();
+    }
+}
